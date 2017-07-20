@@ -7,36 +7,32 @@ from django.views.generic import (
     ListView
 )
 
-from .models import (
-	Organizations,
-	Office,
-	Person,
-)
+from .models import (Organization, Office, Person, )
 
 
-class OrganizationsCreateView(CreateView):
+class OrganizationCreateView(CreateView):
 
-    model = Organizations
-
-
-class OrganizationsDeleteView(DeleteView):
-
-    model = Organizations
+    model = Organization
 
 
-class OrganizationsDetailView(DetailView):
+class OrganizationDeleteView(DeleteView):
 
-    model = Organizations
-
-
-class OrganizationsUpdateView(UpdateView):
-
-    model = Organizations
+    model = Organization
 
 
-class OrganizationsListView(ListView):
+class OrganizationDetailView(DetailView):
 
-    model = Organizations
+    model = Organization
+
+
+class OrganizationUpdateView(UpdateView):
+
+    model = Organization
+
+
+class OrganizationListView(ListView):
+
+    model = Organization
 
 
 class OfficeCreateView(CreateView):

@@ -6,29 +6,29 @@ from . import views
 
 urlpatterns = [
     url(
-        regex="^Organizations/~create/$",
-        view=views.OrganizationsCreateView.as_view(),
-        name='Organizations_create',
+        regex="^Organization/~create/$",
+        view=views.OrganizationCreateView.as_view(),
+        name='Organization_create',
     ),
     url(
-        regex="^Organizations/(?P<pk>\d+)/~delete/$",
-        view=views.OrganizationsDeleteView.as_view(),
-        name='Organizations_delete',
+        regex="^Organization/(?P<pk>\d+)/~delete/$",
+        view=views.OrganizationDeleteView.as_view(),
+        name='Organization_delete',
     ),
     url(
-        regex="^Organizations/(?P<pk>\d+)/$",
-        view=views.OrganizationsDetailView.as_view(),
-        name='Organizations_detail',
+        regex="^Organization/(?P<pk>\d+)/$",
+        view=views.OrganizationDetailView.as_view(),
+        name='Organization_detail',
     ),
     url(
-        regex="^Organizations/(?P<pk>\d+)/~update/$",
-        view=views.OrganizationsUpdateView.as_view(),
-        name='Organizations_update',
+        regex="^Organization/(?P<pk>\d+)/~update/$",
+        view=views.OrganizationUpdateView.as_view(),
+        name='Organization_update',
     ),
     url(
-        regex="^Organizations/$",
-        view=views.OrganizationsListView.as_view(),
-        name='Organizations_list',
+        regex="^Organization/$",
+        view=views.OrganizationListView.as_view(),
+        name='Organization_list',
     ),
 	url(
         regex="^Office/~create/$",
