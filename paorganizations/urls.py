@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+from django.conf.urls import url
+from django.views.generic import TemplateView
+
+from . import views
+
+urlpatterns = [
+    url(
+        regex="^Organizations/~create/$",
+        view=views.OrganizationsCreateView.as_view(),
+        name='Organizations_create',
+    ),
+    url(
+        regex="^Organizations/(?P<pk>\d+)/~delete/$",
+        view=views.OrganizationsDeleteView.as_view(),
+        name='Organizations_delete',
+    ),
+    url(
+        regex="^Organizations/(?P<pk>\d+)/$",
+        view=views.OrganizationsDetailView.as_view(),
+        name='Organizations_detail',
+    ),
+    url(
+        regex="^Organizations/(?P<pk>\d+)/~update/$",
+        view=views.OrganizationsUpdateView.as_view(),
+        name='Organizations_update',
+    ),
+    url(
+        regex="^Organizations/$",
+        view=views.OrganizationsListView.as_view(),
+        name='Organizations_list',
+    ),
+	url(
+        regex="^Office/~create/$",
+        view=views.OfficeCreateView.as_view(),
+        name='Office_create',
+    ),
+    url(
+        regex="^Office/(?P<pk>\d+)/~delete/$",
+        view=views.OfficeDeleteView.as_view(),
+        name='Office_delete',
+    ),
+    url(
+        regex="^Office/(?P<pk>\d+)/$",
+        view=views.OfficeDetailView.as_view(),
+        name='Office_detail',
+    ),
+    url(
+        regex="^Office/(?P<pk>\d+)/~update/$",
+        view=views.OfficeUpdateView.as_view(),
+        name='Office_update',
+    ),
+    url(
+        regex="^Office/$",
+        view=views.OfficeListView.as_view(),
+        name='Office_list',
+    ),
+	url(
+        regex="^Person/~create/$",
+        view=views.PersonCreateView.as_view(),
+        name='Person_create',
+    ),
+    url(
+        regex="^Person/(?P<pk>\d+)/~delete/$",
+        view=views.PersonDeleteView.as_view(),
+        name='Person_delete',
+    ),
+    url(
+        regex="^Person/(?P<pk>\d+)/$",
+        view=views.PersonDetailView.as_view(),
+        name='Person_detail',
+    ),
+    url(
+        regex="^Person/(?P<pk>\d+)/~update/$",
+        view=views.PersonUpdateView.as_view(),
+        name='Person_update',
+    ),
+    url(
+        regex="^Person/$",
+        view=views.PersonListView.as_view(),
+        name='Person_list',
+    ),
+	]
