@@ -1,8 +1,15 @@
-coverage==4.3.4
+coverage==4.4.1
 mock>=1.0.1
-flake8>=2.1.0
+flake8==3.3.0 # pyup: != 2.6.0
 tox>=1.7.0
+django-test-plus==1.0.18
 codecov>=2.0.0
 django-model-utils>=2.0
+factory-boy==2.8.1
+
+# pytest
+pytest-django==3.1.2
+pytest-sugar==0.8.0
 
 # Additional test requirements go here
+-e git://github.com/simodalla/pympa-utils.git#egg=pympa-utils
