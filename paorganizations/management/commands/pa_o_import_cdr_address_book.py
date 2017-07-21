@@ -2,7 +2,7 @@ import csv
 
 from django.core.management.base import BaseCommand, CommandError
 
-from ...models import Organization, Person, Assignment
+from ...models import (Organization, Person, Assignment, TelephoneNumber)
 
 
 class Command(BaseCommand):
@@ -22,6 +22,8 @@ class Command(BaseCommand):
             reader = csv.reader(f_csv, delimiter=',')
 
             organizations = Organization.objects.all()
+
+            n = 0
 
             for row in reader:
                 name = row[1].strip().lower().title().split()
@@ -43,8 +45,6 @@ class Command(BaseCommand):
                         last_name__iexact=last_name,
                         first_name__iexact=first_name).first()
 
-
-
                     if person is None:
                         print("{} {} --> person {} --> org {}".format(
                             last_name, first_name, person, row[4]))
@@ -61,10 +61,49 @@ class Command(BaseCommand):
                             title='Casalecchio di Reno')
                         #print("**** {}".format(row[4]))
 
-                    t_assignment = Assignment.objects.get_or_create(
+                    assignment, a_creted = Assignment.objects.get_or_create(
                         organization=organization, person=person)
 
-                    print(person, organization, t_assignment)
+                    # internal numbers
+                    if row[3].strip():
+                        for int_number in row[3].strip().split(' '):
+                            #print(int_number)
+                            o_int_number, created = (
+                                TelephoneNumber.objects.get_or_create(
+                                    number=int_number, type='internal'))
+
+                            assignment.telephone_numbers.add(o_int_number)
+
+                    # external numbers
+                    if row[11].strip():
+                        for ext_number in row[11].strip().split(' '):
+                            if ext_number.startswith('51'):
+                                ext_number = '0' + ext_number
+                            # print(ext_number)
+                            o_ext_number, created = (
+                                TelephoneNumber.objects.get_or_create(
+                                    number=ext_number, type='external'))
+
+                            assignment.telephone_numbers.add(o_ext_number)
+
+                    # fax numbers
+                    if row[12].strip():
+                        for fax_number in row[12].strip().split(' '):
+                            if fax_number.startswith('51'):
+                                fax_number = '0' + ext_number
+                            print(fax_number)
+                            o_fax_number, created = (
+                                TelephoneNumber.objects.get_or_create(
+                                    number=fax_number, type='fax'))
+
+                            assignment.telephone_numbers.add(o_fax_number)
+
+                    print(person, organization, " ** ", assignment)
+
+
+                # n += 1
+                # if n == 30:
+                #     break
 
 
                     # if person:

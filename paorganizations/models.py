@@ -47,6 +47,13 @@ class Building(TimeStampedModel, Published):
         return '{}'.format(self.title)
 
 
+class Place(TimeStampedModel):
+    building = models.ForeignKey(Building, blank=True, null=True,
+                                 verbose_name=_('building'))
+    plane = models.CharField(_('room number'), blank=True, max_length=10)
+    room_number = models.CharField(_('room number'), blank=True, max_length=10)
+
+
 class Email(TimeStampedModel, Published):
     address = models.EmailField(_('email address'), blank=True)
 
@@ -59,15 +66,16 @@ class Email(TimeStampedModel, Published):
 
 
 class TelephoneNumber(TimeStampedModel, Published):
-    TYPES = Choices(('fix', _('fix')), ('internal', _('internal')),
+    TYPES = Choices(('external', _('external')), ('internal', _('internal')),
                     ('mobile', _('mobile')), ('fax', _('fax')),)
-    number = models.EmailField(_('number'), blank=True)
-    type = models.CharField(choices=TYPES, default=TYPES.fix,
-                              max_length=20)
+    number = models.CharField(_('number'), max_length=30, blank=True)
+    type = models.CharField(choices=TYPES, default=TYPES.external,
+                            max_length=20)
 
     class Meta:
         verbose_name = _('telephone number')
         verbose_name_plural = _('telephone number')
+        unique_together = ('number', 'type')
 
     def __str__(self):
         return '{}'.format(self.number)
@@ -126,8 +134,9 @@ class Assignment(TimeStampedModel, Published):
     notes = models.TextField(_('notes'), blank=True)
     office = models.ForeignKey(Office, blank=True, null=True,
                                verbose_name=_('office'))
-    buildings = models.ManyToManyField(Building, blank=True, null=True,
-                                       verbose_name=_('buildingss'))
+    # buildings = models.ManyToManyField(Building, blank=True, null=True,
+    #                                    verbose_name=_('buildingss'))
+
 
     class Meta:
         verbose_name = _('assignment')
