@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import random
+
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -77,7 +79,9 @@ class Person(TimeStampedModel, Published):
     first_name = models.CharField(_('first name'), max_length=50, blank=True)
     last_name = models.CharField(_('last name'), max_length=50, blank=True)
     register_number = models.CharField(_('register number'), max_length=10,
-                                       blank=True)
+                                       blank=True, unique=True)
+    cdr_ab_id = models.CharField(_('register number'), max_length=20,
+                                 blank=True)
 
     class Meta:
         verbose_name = _('person')
@@ -85,6 +89,12 @@ class Person(TimeStampedModel, Published):
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+    def save(self, *args, **kwargs):
+        if len(self.register_number) == 0:
+            self.register_number = "_g_{}".format(
+                random.randint(0, 9999999))
+        super(Person, self).save(*args, **kwargs)
 
 
 class Office(TimeStampedModel, Published):
@@ -108,14 +118,15 @@ class Assignment(TimeStampedModel, Published):
     organization = models.ForeignKey(Organization,
                                      verbose_name=_('organization'))
     person = models.ForeignKey(Person, verbose_name=_('person'))
-    email = models.ForeignKey(Email, blank=True,
+    email = models.ForeignKey(Email, blank=True, null=True,
                               verbose_name=_('email'))
     telephone_numbers = models.ManyToManyField(TelephoneNumber, blank=True,
                                                verbose_name=_(
                                                    'telephone numbers'))
     notes = models.TextField(_('notes'), blank=True)
-    office = models.ForeignKey(Office, blank=True, verbose_name=_('office'))
-    buildings = models.ManyToManyField(Building, blank=True,
+    office = models.ForeignKey(Office, blank=True, null=True,
+                               verbose_name=_('office'))
+    buildings = models.ManyToManyField(Building, blank=True, null=True,
                                        verbose_name=_('buildingss'))
 
     class Meta:
